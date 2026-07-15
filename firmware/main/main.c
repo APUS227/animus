@@ -1,8 +1,11 @@
 #include "nvs_flash.h"
+#include "esp_netif.h"
+#include "esp_event.h"
 #include "esp_log.h"
 #include "sdkconfig.h"
 
 #include "animus_config.h"
+#include "provisioning.h"
 #include "wifi.h"
 #include "safety.h"
 #include "tools.h"
@@ -20,10 +23,25 @@ void app_main(void)
         ESP_ERROR_CHECK(r);
     }
 
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+
     /* Order matters: pins go to their safe state before the network is up. */
     ESP_ERROR_CHECK(safety_init());
     ESP_ERROR_CHECK(tools_init());
-    ESP_ERROR_CHECK(wifi_init_sta());
+
+    char ssid[33], pass[65];
+    if (!provisioning_get_credentials(ssid, sizeof(ssid),
+                                      pass, sizeof(pass))) {
+        provisioning_start_portal(); /* never returns */
+    }
+
+    if (wifi_init_sta(ssid, pass) != ESP_OK) {
+        ESP_LOGE(TAG, "could not join \"%s\" — falling back to setup portal",
+                 ssid);
+        provisioning_request_portal_and_reboot(); /* never returns */
+    }
+
     ESP_ERROR_CHECK(mcp_server_start());
 
     ESP_LOGI(TAG, "==================================================");

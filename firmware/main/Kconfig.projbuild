@@ -1,14 +1,18 @@
 menu "Animus Configuration"
 
     config ANIMUS_WIFI_SSID
-        string "WiFi SSID"
-        default "myssid"
+        string "WiFi SSID (developer fallback)"
+        default ""
         help
-            Network the device joins on boot.
+            Leave EMPTY for normal use: the device will start its
+            captive setup portal (WiFi "animus-setup") and let the
+            user configure networking from a phone. Set a value only
+            for development builds where reflashing often is easier
+            than re-provisioning.
 
     config ANIMUS_WIFI_PASSWORD
-        string "WiFi password"
-        default "mypassword"
+        string "WiFi password (developer fallback)"
+        default ""
 
     config ANIMUS_DEVICE_NAME
         string "Device name (reported over MCP)"
