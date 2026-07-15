@@ -4,7 +4,7 @@
 
 Animus turns a $5 ESP32 into a native [MCP](https://modelcontextprotocol.io) server. No bridge, no Raspberry Pi, no Home Assistant, no cloud — the microcontroller **is** the server. Flash it, join your WiFi, and Claude (or any MCP client) can read sensors and switch real-world things — within hard limits compiled into the firmware.
 
-[![Build firmware](https://github.com/OWNER/animus/actions/workflows/build.yml/badge.svg)](https://github.com/OWNER/animus/actions/workflows/build.yml)
+[![Build firmware](https://github.com/APUS227/animus/actions/workflows/build.yml/badge.svg)](https://github.com/APUS227/animus/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 ![MCP](https://img.shields.io/badge/MCP-2025--11--25-6E56CF)
 ![ESP-IDF](https://img.shields.io/badge/ESP--IDF-v5.5-E7352C)
@@ -44,7 +44,7 @@ The model is told all of this in the MCP `instructions` field and in tool descri
 Requires [ESP-IDF v5.5](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/) and any ESP32 board (ESP32, S2, S3, C3...).
 
 ```bash
-git clone https://github.com/OWNER/animus && cd animus/firmware
+git clone https://github.com/APUS227/animus && cd animus/firmware
 idf.py set-target esp32s3          # or esp32, esp32c3, ...
 idf.py menuconfig                  # Animus Configuration → WiFi SSID/password
 idf.py flash monitor
