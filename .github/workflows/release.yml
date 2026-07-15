@@ -1,0 +1,33 @@
+name: Release binaries
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        target: [esp32s3, esp32]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and merge flashable binary
+        uses: espressif/esp-idf-ci-action@v1
+        with:
+          esp_idf_version: v5.5
+          target: ${{ matrix.target }}
+          path: firmware
+          command: |
+            idf.py build
+            idf.py merge-bin -o animus-${{ matrix.target }}.bin
+
+      - name: Attach binary to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: firmware/build/animus-${{ matrix.target }}.bin
+          generate_release_notes: true
