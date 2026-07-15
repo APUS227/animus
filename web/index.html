@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Animus — give your AI agent a body</title>
+<meta name="description" content="Flash Animus from your browser and turn a $5 ESP32 into a native, safety-first MCP server for Claude and other AI agents.">
+<style>
+  :root { --bg:#111; --card:#1a1a1a; --line:#2c2c2c; --fg:#eee; --dim:#999; --accent:#e8a33d; }
+  * { box-sizing:border-box; }
+  body { font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg);
+         max-width:44rem; margin:0 auto; padding:2.5rem 1.25rem 4rem; line-height:1.6; }
+  h1 { font-size:2.4rem; margin:.2rem 0; color:var(--accent); letter-spacing:.5px; }
+  h2 { margin-top:2.5rem; font-size:1.25rem; }
+  .tagline { font-size:1.15rem; color:var(--fg); margin-top:0; }
+  .sub { color:var(--dim); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:.9rem; padding:1.4rem; margin:1.6rem 0; }
+  .flash { text-align:center; }
+  esp-web-install-button { --esp-tools-button-color:var(--accent); --esp-tools-button-text-color:#111; }
+  ol { padding-left:1.2rem; } li { margin:.5rem 0; }
+  code { background:#000; border:1px solid var(--line); border-radius:.35rem; padding:.12rem .4rem; font-size:.92em; }
+  pre { background:#000; border:1px solid var(--line); border-radius:.6rem; padding:.9rem 1rem; overflow-x:auto; }
+  a { color:var(--accent); }
+  .warn { color:var(--dim); font-size:.92rem; }
+  .unsupported { display:none; color:#e06c5b; }
+  footer { margin-top:3rem; color:var(--dim); font-size:.9rem; }
+</style>
+</head>
+<body>
+
+<h1>Animus</h1>
+<p class="tagline"><strong>Give your AI agent a body.</strong></p>
+<p class="sub">A $5 ESP32 becomes a native MCP server — no bridge, no Raspberry Pi, no cloud.
+The microcontroller <em>is</em> the server, and hard safety limits are compiled into its firmware.</p>
+
+<div class="card flash">
+  <h2 style="margin-top:0">1 · Flash it from this page</h2>
+  <p>Plug your ESP32 (or ESP32-S3) board into USB and click:</p>
+  <esp-web-install-button manifest="./manifest.json">
+    <span slot="unsupported" class="unsupported" style="display:block">
+      This browser can't flash devices — WebSerial is required.
+      Please use Chrome or Edge on desktop.
+    </span>
+  </esp-web-install-button>
+  <p class="warn">The chip type is detected automatically. Close any serial monitors first —
+  only one program can hold the port.</p>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">2 · Connect it to your WiFi</h2>
+  <ol>
+    <li>On your phone, join the open WiFi network <code>animus-setup</code>.</li>
+    <li>A setup page pops up (or open <code>192.168.4.1</code>). Tap your network, enter its password.</li>
+    <li>The device reboots and prints its address — it's also visible in your router's client list
+        as <code>animus-1</code>.</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">3 · Introduce it to your agent</h2>
+  <pre>claude mcp add --transport http animus http://&lt;device-ip&gt;/mcp</pre>
+  <p>Then just ask: <em>"What tools does my animus device have? Blink the demo LED."</em>
+  Works with any MCP client — Claude Code, Claude Desktop, Cursor, MCP Inspector and more.</p>
+</div>
+
+<h2>Safety is the architecture, not a prompt</h2>
+<p>The firmware enforces a compiled-in pin allow-list, per-output auto-off timers
+(a pump physically cannot run longer than its limit), an audit log of every actuation,
+and DNS-rebinding protection. Nothing an LLM sends over the network can widen these limits
+at runtime. Read the <a href="https://github.com/APUS227/animus/blob/main/docs/safety.md">safety model</a>.</p>
+
+<footer>
+  <a href="https://github.com/APUS227/animus">Source on GitHub</a> · MIT license ·
+  Firmware version served here: <strong>v0.2.0</strong>
+</footer>
+
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</body>
+</html>

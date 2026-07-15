@@ -1,0 +1,26 @@
+{
+  "name": "Animus",
+  "version": "0.2.0",
+  "home_assistant_domain": "",
+  "new_install_prompt_erase": true,
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "path": "https://github.com/APUS227/animus/releases/download/v0.2.0/animus-esp32s3.bin",
+          "offset": 0
+        }
+      ]
+    },
+    {
+      "chipFamily": "ESP32",
+      "parts": [
+        {
+          "path": "https://github.com/APUS227/animus/releases/download/v0.2.0/animus-esp32.bin",
+          "offset": 0
+        }
+      ]
+    }
+  ]
+}
