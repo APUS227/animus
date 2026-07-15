@@ -39,16 +39,25 @@ The safety layer is the only code path that touches GPIO, and its rules are **co
 
 The model is told all of this in the MCP `instructions` field and in tool descriptions that list your *actual* pins — so the agent knows exactly (and only) what exists.
 
-## Quickstart (~5 minutes after ESP-IDF is installed)
+## Quickstart
+
+### Option A — flash from your browser (~3 minutes, no toolchain)
+
+1. Open **[apus227.github.io/animus](https://apus227.github.io/animus/)** in Chrome or Edge, plug any ESP32 / ESP32-S3 board into USB and click **Install** — the chip type is detected automatically.
+2. On your phone, join the open WiFi network `animus-setup`. A setup page pops up: pick your network, enter its password.
+3. The device reboots onto your WiFi and serves MCP. Done.
+
+### Option B — build from source
 
 Requires [ESP-IDF v5.5](https://docs.espressif.com/projects/esp-idf/en/stable/esp32/get-started/) and any ESP32 board (ESP32, S2, S3, C3...).
 
 ```bash
 git clone https://github.com/APUS227/animus && cd animus/firmware
 idf.py set-target esp32s3          # or esp32, esp32c3, ...
-idf.py menuconfig                  # Animus Configuration → WiFi SSID/password
 idf.py flash monitor
 ```
+
+WiFi is configured through the same on-device setup portal as Option A. (Developers who reflash often can hardcode credentials instead: `idf.py menuconfig` → Animus Configuration.)
 
 The serial monitor prints your endpoint:
 
@@ -95,7 +104,7 @@ Adding your own hardware = editing two small tables in [`firmware/main/animus_co
 
 ## Roadmap
 
-Web-based flashing (no toolchain needed), captive-portal WiFi setup, YAML → config codegen, more peripherals (DHT22, BME280, servo, WS2812, ADC/soil), a physical confirm-to-actuate button, and first-class support for the stateless MCP core landing in revision 2026-07-28 — embedded devices are exactly why stateless matters. Details in [ROADMAP.md](ROADMAP.md).
+Browser flashing and captive-portal WiFi setup shipped in v0.2. Next up: YAML → config codegen, more peripherals (DHT22, BME280, servo, WS2812, ADC/soil), a physical confirm-to-actuate button, remote access without port forwarding (Animus Relay), and first-class support for the stateless MCP core landing in revision 2026-07-28 — embedded devices are exactly why stateless matters. Details in [ROADMAP.md](ROADMAP.md).
 
 ## Contributing
 
