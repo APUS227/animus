@@ -1,0 +1,25 @@
+menu "Animus Configuration"
+
+    config ANIMUS_WIFI_SSID
+        string "WiFi SSID"
+        default "myssid"
+        help
+            Network the device joins on boot.
+
+    config ANIMUS_WIFI_PASSWORD
+        string "WiFi password"
+        default "mypassword"
+
+    config ANIMUS_DEVICE_NAME
+        string "Device name (reported over MCP)"
+        default "animus-1"
+
+    config ANIMUS_AUTH_TOKEN
+        string "Bearer auth token (empty = auth disabled)"
+        default ""
+        help
+            If set, every MCP request must carry the header
+            "Authorization: Bearer <token>". Strongly recommended
+            on any network you do not fully control.
+
+endmenu
