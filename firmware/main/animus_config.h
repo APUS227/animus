@@ -14,7 +14,7 @@
  *  (v0.3 will generate this file from a YAML description — see ROADMAP.md.)
  */
 
-#define ANIMUS_VERSION "0.1.0"
+#define ANIMUS_VERSION "0.2.0"
 
 /* ---- Types ----------------------------------------------------------------- */
 
